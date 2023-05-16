@@ -79,7 +79,7 @@ class User(AbstractBaseUser):
     def has_module_perms(self, app_label):
         return True
 
-class UserProfile(models.Model):
+class Customer(models.Model):
     user = OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
     profile_picture = models.ImageField(upload_to='users/profile_pictures', blank=True, null=True)
     address = models.CharField(max_length=250, blank=True, null=True)
@@ -96,7 +96,7 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.user.email
 
-class AstrologerProfile(models.Model):
+class Astrologer(models.Model):
     astrologer_name = OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
     profile_picture = models.ImageField(upload_to='astrologer/profile_pictures', blank=True, null=True)
     year_of_experience = models.CharField(max_length=50, blank=True, null=True)
