@@ -29,7 +29,7 @@ class CustomerLoginSerializer(serializers.ModelSerializer):
 
 
 
-# ===============================================================OR===============================
+# ===============================================================AND===============================
 
 from rest_framework import serializers
 from .models import User, Customer, Astrologer
