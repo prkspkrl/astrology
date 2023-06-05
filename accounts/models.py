@@ -99,7 +99,7 @@ class Customer(models.Model):
 class Astrologer(models.Model):
     astrologer_name = OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
     profile_picture = models.ImageField(upload_to='astrologer/profile_pictures', blank=True, null=True)
-    year_of_experience = models.CharField(max_length=50, blank=True, null=True)
+    year_of_experience = models.IntegerField(blank=True, null=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)

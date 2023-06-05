@@ -1,13 +1,17 @@
 from django.urls import path, include
-from .views import UserListCreateAPIView, UserRetrieveUpdateDestroyAPIView,CustomerListCreateAPIView, CustomerRetrieveUpdateDestroyAPIView, AstrologerListCreateAPIView, AstrologerRetrieveUpdateDestroyAPIView, UserLoginView
+from .views import CustomerViewSet, UserViewSet,AstrologerViewSet
 from . import views
 
 urlpatterns = [
-    path('login/', UserLoginView.as_view(), name='user-login' ),
-    path('user/', UserListCreateAPIView.as_view(), name='user-list-create'),
-    path('user/<int:pk>/', UserRetrieveUpdateDestroyAPIView.as_view(), name='user-retrieve-update-destroy'),
-    path('customer/', CustomerListCreateAPIView.as_view(), name='customer-list-create'),
-    path('customer/<int:pk>/', CustomerRetrieveUpdateDestroyAPIView.as_view(), name='customer-retrieve-update-destroy'),
-    path('astrologer/', AstrologerListCreateAPIView.as_view(), name='astrologer-list-create'),
-    path('astrologer/<int:pk>/', AstrologerRetrieveUpdateDestroyAPIView.as_view(), name='astrologer-retrieve-update-destroy'),
+
+    path('users/', UserViewSet.as_view({'get': 'list', 'post': 'create'}), name='user-list'),
+    path('users/<int:pk>/', UserViewSet.as_view({'get': 'retrieve', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy'}), name='user-detail'),
+    path('users/login/', UserViewSet.as_view({'post': 'login'}), name='user-login'),
+
+    path('customers/', CustomerViewSet.as_view({'get': 'list', 'post': 'create'})),
+    path('customers/<int:pk>/', CustomerViewSet.as_view({'get': 'retrieve', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy'})),
+
+    path('astrologers/', AstrologerViewSet.as_view({'get': 'list', 'post': 'create'})),
+    path('astrologers/<int:pk>/', AstrologerViewSet.as_view({'get': 'retrieve', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy'})),
+
 ]
