@@ -1,15 +1,17 @@
-
-from rest_framework import generics, status
+from rest_framework.authtoken.models import Token
 from .models import User, Customer, Astrologer
+from rest_framework import viewsets, status
+from rest_framework.response import Response
+from rest_framework.decorators import action
 from .serializers import UserSerializer, CustomerSerializer, AstrologerSerializer
 
-from rest_framework.authtoken.models import Token
-from rest_framework.response import Response
 
-class UserLoginView(generics.CreateAPIView):
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
     serializer_class = UserSerializer
 
-    def create(self, request, *args, **kwargs):
+    @action(detail=False, methods=['post'])
+    def login(self, request):
         username = request.data.get('username')
         password = request.data.get('password')
 
@@ -33,60 +35,12 @@ class UserLoginView(generics.CreateAPIView):
             pass
         return None
 
-class UserViewSet(generics.RetrieveUpdateAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
 
-    def get_object(self):
-        return self.request.user
-
-
-
-class UserListCreateAPIView(generics.ListCreateAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-class UserRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-class CustomerListCreateAPIView(generics.ListCreateAPIView):
+class CustomerViewSet(viewsets.ModelViewSet):
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
 
 
-class CustomerRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Customer.objects.all()
-    serializer_class = CustomerSerializer
-
-
-class AstrologerListCreateAPIView(generics.ListCreateAPIView):
+class AstrologerViewSet(viewsets.ModelViewSet):
     queryset = Astrologer.objects.all()
     serializer_class = AstrologerSerializer
-
-class AstrologerRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Astrologer.objects.all()
-    serializer_class = AstrologerSerializer
-
-
-
-
-from django.shortcuts import render
-# from .forms import UserForm
-# from .models import User
-#
-# # Create your views here.
-# def registerUser(request):
-#     if request.method == 'POST':
-#         form = UserForm(request.POST)
-#         if form.is_valid():
-#             password = form.cleaned_data['password']
-#             user = form.save(commit=False)
-#             user.set_password(password)
-#             user.role = User.CUSTOMER
-#             user.save()
-#     else:
-#         form = UserForm()
-#     context = {
-#         'form': form,
-#     }
-#     return render(request,'accounts/register.html', context)
